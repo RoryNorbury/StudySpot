@@ -1,2 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using SwinTT_Console;
+
+const string filePath = "./file.csv";
+FileLoader.Load(filePath);
