@@ -2,7 +2,7 @@ namespace SwinTT_Console;
 
 public class Location(string name)
 {
-    readonly List<Entry> entries = new();
+    public readonly List<Entry> entries = new();
     internal string Name { get; } = name;
 
     void AddEntry(Entry e)
@@ -45,5 +45,21 @@ public class Location(string name)
         }
 
         return locations.ToArray();
+    }
+
+    internal static Location[] RemoveNonClassroomLocations(Location[] locations)
+    {
+        List<Location> filteredLocations = new();
+        foreach (Location l in locations)
+        {
+            //The names of classrooms are rarely more than 7 characters long, for example:
+            //EN###, ATC###, or AMDC###. Sometimes there is a small "a" or "b" after the number,
+            //but usually these are offices. For safety, I'm checking for 8 or more characters
+            //and discarding any locations that have a longer name than that.
+            if (l.Name.Length > 8) continue;
+            filteredLocations.Add(l);
+        }
+
+        return filteredLocations.ToArray();
     }
 }

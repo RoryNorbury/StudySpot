@@ -8,9 +8,11 @@ for (int i = 1; i <= YearlyUpdateSettings.NumberOfCsvFiles; i++)
     entries.AddRange(newEntries);
 }
 
-Location[] locations = Location.SortEntriesByLocation(entries.ToArray());
+Location[] unfilteredLocations = Location.SortEntriesByLocation(entries.ToArray());
+Location[] locations = Location.RemoveNonClassroomLocations(unfilteredLocations);
 
-DateTime currentDateTime = DateTime.Now;
+DateTime currentDateTime = DateTime.Parse("2026-03-11 10:31am");
+Console.WriteLine(currentDateTime);
 int currentTeachingWeek = TimeManager.GetTeachingWeek(currentDateTime);
 DayOfWeek currentDayOfWeek = currentDateTime.DayOfWeek;
 TimeOnly currentTime = TimeOnly.FromDateTime(currentDateTime);
@@ -18,6 +20,11 @@ TimeOnly currentTime = TimeOnly.FromDateTime(currentDateTime);
 List<Location> locationsCurrentlyFree = new();
 foreach (Location l in locations)
 {
-    if (l.IsFreeAt(currentTime, currentDayOfWeek, currentTeachingWeek)) locationsCurrentlyFree.Add(l);
-    Console.WriteLine(l.Name);
+    if (l.IsFreeAt(currentTime, currentDayOfWeek, currentTeachingWeek))
+    {
+        locationsCurrentlyFree.Add(l);
+        Console.WriteLine($"{l.Name} is free at this time.");
+    }
 }
+
+Console.WriteLine($"{locationsCurrentlyFree.Count} free locations found of {locations.Length} searched.");
