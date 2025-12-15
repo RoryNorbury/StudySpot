@@ -2,7 +2,7 @@
 Welcome to StudySpot. It helps you find available classrooms and lecture theatres at Swinburne University of Technology's Hawthorn Campus.
 
 ### Usage
-Go to [StudySpot](studyspot.linkfinitive.com) and enter the time that you plan to be on campus. A list of rooms that don't have classes scheduled will be displayed. Note that just because there's nothing officially scheduled, that doesn't guarantee that the room will really be empty.
+Go to [StudySpot](https://studyspot.linkfinitive.com) and enter the time that you plan to be on campus. A list of rooms that don't have classes scheduled will be displayed. Note that just because there's nothing officially scheduled, that doesn't guarantee that the room will really be empty.
 
 ### Problems
 Some of the rooms in the system may not be classrooms or may not be accessible to students. If you find such a room, please email [bugs@linkfinitive.com](mailto:bugs@linkfinitive.com) and the filtering will be updated to remove it. Or you can submit a PR :)
