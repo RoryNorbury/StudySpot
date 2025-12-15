@@ -3,9 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>StudySpot</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            font-size: large;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #locationsContainer {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .location {
+            border: solid slategray;
+            border-radius: 10px;
+            padding: 0 10px 0 10px;
+            margin: 10px;
+        }
+    </style>
+
 </head>
 <body>
+
 <h1>StudySpot</h1>
-<script type="module" src="main.js"></script>
+<p>The following rooms are unscheduled <strong>now</strong>.</p>
+<div id="locationsContainer"></div>
+
+<script src="main.js" type="module"></script>
 </body>
 </html>

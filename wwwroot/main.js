@@ -29,7 +29,20 @@ function getFreeLocations(dateTime) {
     return exports.StudySpot.Backend.DataManager.GetFreeLocations(dateTime.toISOString());
 }
 
+function displayLocations(locations) {
+    const locationsContainer = document.getElementById("locationsContainer");
+    for (const location of locations) {
+        const locationDiv = document.createElement("div");
+        locationDiv.className = "location";
+        const locationText = document.createElement("p");
+        locationText.textContent = location;
+        locationDiv.appendChild(locationText);
+        locationsContainer.appendChild(locationDiv);
+    }
+}
+
 //Program
 await loadCSV();
 let freeLocations = getFreeLocations(new Date());
 console.log(freeLocations);
+displayLocations(freeLocations);
