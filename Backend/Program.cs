@@ -1,4 +1,4 @@
-﻿using SwinTT_Console;
+﻿using StudySpot;
 
 List<Entry> entries = new();
 for (int i = 1; i <= YearlyUpdateSettings.NumberOfCsvFiles; i++)

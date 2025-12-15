@@ -1,4 +1,4 @@
-namespace SwinTT_Console;
+namespace StudySpot;
 
 public class Entry
 {

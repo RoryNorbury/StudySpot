@@ -1,8 +1,8 @@
-namespace SwinTT_Console;
+namespace StudySpot;
 
 public class Location(string name)
 {
-    public readonly List<Entry> entries = new();
+    readonly List<Entry> entries = new();
     internal string Name { get; } = name;
 
     void AddEntry(Entry e)
