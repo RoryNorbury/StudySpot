@@ -1,4 +1,4 @@
-namespace StudySpot;
+namespace StudySpot.Backend;
 
 public class Location(string name)
 {
@@ -61,5 +61,16 @@ public class Location(string name)
         }
 
         return filteredLocations.ToArray();
+    }
+
+    public static string[] LocationListToStringOfLocationNames(List<Location> locations)
+    {
+        List<string> names = new();
+        foreach (Location l in locations)
+        {
+            names.Add(l.Name);
+        }
+
+        return names.ToArray();
     }
 }

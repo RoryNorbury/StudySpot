@@ -1,4 +1,4 @@
-namespace StudySpot;
+namespace StudySpot.Backend;
 
 public static class TimeManager
 {
@@ -73,10 +73,11 @@ public static class TimeManager
 
     internal static int GetTeachingWeek(DateTime dateTime)
     {
-        //This function is here because it makes more sense from a code organisation standpoint. However,
-        //it simply calls the function in the "yearly update settings" so that eveyrthing that needs to be
-        //changed yearly can be done in one place. Ideally, that function in yearly update settings should
-        //only ever be called here, and other parts of their code should make their calls to this function.
-        return YearlyUpdateSettings.GetTeachingWeek(dateTime);
+        //For 2026, Teaching Week 1 begins on the 29th of Dec 2025, and they continue up to 65 from there.
+        //That means Teaching Week 2 begins on the 5th of Jan 2026, and the hardcoded calulcation below
+        //should give accurate results until the end of 2026. This calculation will need to be adjusted
+        //a new timetable is released (yearly). Unfortunately for now I do not see how to do this automatically.
+        int dayOfYear = dateTime.DayOfYear;
+        return (dayOfYear + 2) / 7 + 1;
     }
 }

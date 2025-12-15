@@ -1,4 +1,4 @@
-namespace StudySpot;
+namespace StudySpot.Backend;
 
 public class Entry
 {
