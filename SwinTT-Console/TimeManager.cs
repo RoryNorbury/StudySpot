@@ -2,22 +2,22 @@ namespace SwinTT_Console;
 
 public static class TimeManager
 {
-    internal static Day DayStringDeserializer(string serializedDay)
+    internal static DayOfWeek DeserializeDay(string serializedDay)
     {
         return serializedDay switch
         {
-            "Mon" => Day.Monday,
-            "Tue" => Day.Tuesday,
-            "Wed" => Day.Wednesday,
-            "Thu" => Day.Thursday,
-            "Fri" => Day.Friday,
-            "Sat" => Day.Saturday,
-            "Sun" => Day.Sunday,
+            "Mon" => DayOfWeek.Monday,
+            "Tue" => DayOfWeek.Tuesday,
+            "Wed" => DayOfWeek.Wednesday,
+            "Thu" => DayOfWeek.Thursday,
+            "Fri" => DayOfWeek.Friday,
+            "Sat" => DayOfWeek.Saturday,
+            "Sun" => DayOfWeek.Sunday,
             _ => throw new Exception("Not a valid day serialization")
         };
     }
 
-    internal static TimeOnly TimeStringDeserializer(string serializedTime)
+    internal static TimeOnly DeserializeTime(string serializedTime)
     {
         //Separate the hours (which could be 1 or 2 digits) from the constant-length rest of the string
         string[] split = serializedTime.Split(':');
@@ -38,19 +38,45 @@ public static class TimeManager
         return new TimeOnly(hours, minutes);
     }
 
-    internal static int[] TeachingWeekDeserializer(string serializedTeachingWeeks)
+    internal static int[] DeserializeTeachingWeek(string serializedTeachingWeeks)
     {
-        return [0];
+        //Teaching weeks are stored as ranges (XX-XX), possibly more than one range separated by a comma.
+        string[] ranges = serializedTeachingWeeks.Split(',');
+        List<int> teachingWeeks = new();
+        foreach (string range in ranges)
+        {
+            //Extract the first and last weeks in the range (stored in the string).
+            //There are two types of hyphen characters used in the range, u+002D and U+2011. Lol surely pick one.
+            //We also need to trim out random Zero Width Space characters (U+200B) sprinkled into the lovely data.
+            string[] startAndEndOfRange = range.Split('‑', '-');
+            int startOfRange = int.Parse(startAndEndOfRange[0].Trim('​'));
+            int endOfRange;
+            try
+            {
+                endOfRange = int.Parse(startAndEndOfRange[1].Trim('​'));
+            }
+            catch (IndexOutOfRangeException)
+            {
+                //This will happen if there is no range, just a single week.
+                endOfRange = startOfRange;
+            }
+
+            //Convert to a list of weeks that are bounded by the range.
+            for (int i = startOfRange; i <= endOfRange; i++)
+            {
+                teachingWeeks.Add(i);
+            }
+        }
+
+        return teachingWeeks.ToArray();
     }
 
-    internal enum Day
+    internal static int GetTeachingWeek(DateTime dateTime)
     {
-        Monday,
-        Tuesday,
-        Wednesday,
-        Thursday,
-        Friday,
-        Saturday,
-        Sunday
+        //This function is here because it makes more sense from a code organisation standpoint. However,
+        //it simply calls the function in the "yearly update settings" so that eveyrthing that needs to be
+        //changed yearly can be done in one place. Ideally, that function in yearly update settings should
+        //only ever be called here, and other parts of their code should make their calls to this function.
+        return YearlyUpdateSettings.GetTeachingWeek(dateTime);
     }
 }

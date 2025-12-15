@@ -2,11 +2,11 @@ namespace SwinTT_Console;
 
 public class Entry
 {
-    TimeManager.Day day;
-    TimeOnly startTime;
-    TimeOnly endTime;
-    string location;
-    int[] teachingWeeks;
+    internal readonly DayOfWeek Day;
+    internal readonly TimeOnly EndTime;
+    internal readonly string Location;
+    internal readonly TimeOnly StartTime;
+    internal readonly int[] TeachingWeeks;
 
     public Entry(string serializedEntry)
     {
@@ -27,10 +27,10 @@ public class Entry
         string serializedLocation = serializedFields[8];
         string serializedTeachingWeeks = serializedFields[9];
 
-        day = TimeManager.DayStringDeserializer(serializedDay);
-        startTime = TimeManager.TimeStringDeserializer(serializedStart);
-        endTime = TimeManager.TimeStringDeserializer(serializedEnd);
-        location = serializedLocation;
-        teachingWeeks = TimeManager.TeachingWeekDeserializer(serializedTeachingWeeks);
+        Day = TimeManager.DeserializeDay(serializedDay);
+        StartTime = TimeManager.DeserializeTime(serializedStart);
+        EndTime = TimeManager.DeserializeTime(serializedEnd);
+        Location = serializedLocation;
+        TeachingWeeks = TimeManager.DeserializeTeachingWeek(serializedTeachingWeeks);
     }
 }

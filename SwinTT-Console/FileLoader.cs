@@ -2,7 +2,7 @@ namespace SwinTT_Console;
 
 public static class FileLoader
 {
-    public static List<Entry> Load(string filePath)
+    public static Entry[] Load(string filePath)
     {
         //Files begin with 5 lines of heading befor the actual data.
         const int linesOfHeadingInFile = 5;
@@ -21,6 +21,6 @@ public static class FileLoader
             entries.Add(new Entry(line));
         }
 
-        return entries;
+        return entries.ToArray();
     }
 }
